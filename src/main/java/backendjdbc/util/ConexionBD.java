@@ -2,15 +2,13 @@ package backendjdbc.util;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexionBD {
-    private static String url = "jdbc:mysql://localhost:3306/BDProductos";
-    private static String user = "Walter";
-    private static String password = "12345";
+    private static String url = "jdbc:mysql://localhost:3306/dbackend";
+    private static String user = "Admin";
+    private static String password = "Admin";
     private static BasicDataSource pool;
 
     public static BasicDataSource getInstance() throws SQLException {
