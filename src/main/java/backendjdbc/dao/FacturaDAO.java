@@ -18,7 +18,7 @@ public class FacturaDAO implements ICrud{
     }
 
     @Override
-    public Object porId(long id) {
+    public Object porId(int id) {
         return null;
     }
 
@@ -28,7 +28,7 @@ public class FacturaDAO implements ICrud{
     }
 
     @Override
-    public void eliminar(long id) {
+    public void eliminar(int id) {
 
     }
 

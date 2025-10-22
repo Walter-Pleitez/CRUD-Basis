@@ -33,15 +33,15 @@ public class ProductoDAO implements ICrud<Producto> {
                 productos.add(p);
             }
         }
-        catch(SQLException e){
-            e.printStackTrace();
+        catch(SQLException throwables){
+            throwables.printStackTrace();
         }
 
         return productos;
     }
 
     @Override
-    public Producto porId(long id) {
+    public Producto porId(int id) {
         //PreparedStatement es para sentencias preparadas como WHERE
         Producto producto = null;
 
@@ -49,7 +49,7 @@ public class ProductoDAO implements ICrud<Producto> {
                 PreparedStatement pstmt = getConnection().
                         prepareStatement("SELECT * FROM productos WHERE id = ?");
                 ){
-            pstmt.setLong(1, id);
+            pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if(rs.next()){
                 //producto esta reutilizando codigo
@@ -57,8 +57,8 @@ public class ProductoDAO implements ICrud<Producto> {
                 producto = crearProducto(rs);
             }
         }
-        catch(SQLException e){
-            e.printStackTrace();
+        catch(SQLException throwables){
+            throwables.printStackTrace();
         }
 
         return producto;
@@ -67,8 +67,9 @@ public class ProductoDAO implements ICrud<Producto> {
     @Override
     public void guardar(Producto producto) {
         String sql;
+        Integer idReturned = producto.getId_producto();
 
-        if(producto.getId_producto() != null && producto.getId_producto()>0){
+        if(idReturned != null && idReturned>0){
             sql = "UPDATE producto SET nombre=?, categoria=?, color=?, aroma=?, presentacion=?, precio=?, costo=?" +
                     "WHERE id=?";
         }else{
@@ -85,19 +86,19 @@ public class ProductoDAO implements ICrud<Producto> {
             pstmt.setString(3, producto.getColor());
             pstmt.setString(4, producto.getAroma());
             pstmt.setString(5, producto.getPresentacion());
-            pstmt.setFloat(6, producto.getPrecio());
-            pstmt.setFloat(7, producto.getCosto());
+            pstmt.setDouble(6, producto.getPrecio());
+            pstmt.setDouble(7, producto.getCosto());
 
             pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
 
 
     }
 
     @Override
-    public void eliminar(long id) {
+    public void eliminar(int id) {
         try(
                 PreparedStatement pstmt = getConnection().prepareStatement("DELETE FROM producto" +
                         "WHERE id=?")
@@ -105,10 +106,9 @@ public class ProductoDAO implements ICrud<Producto> {
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
         }
-        catch(SQLException e){
-            throw new RuntimeException(e);
+        catch(SQLException throwables){
+            throwables.printStackTrace();
         }
-
     }
 
     //CARACTERISTICAS PARA REUTILIZACION DE CODIGO, DE IntelliJ Idea.
@@ -117,7 +117,7 @@ public class ProductoDAO implements ICrud<Producto> {
         Producto p = new Producto();
 
         //GetType es la logica, no se hace get del atributo en especifico sino del tipo
-        p.setId_producto(rs.getLong("id_producto"));
+        p.setId_producto(rs.getInt("id_producto"));
         p.setNombre(rs.getString("nombre"));
         p.setCategoria(rs.getString("categoria"));
         p.setColor(rs.getString("color"));

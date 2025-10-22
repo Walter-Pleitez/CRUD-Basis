@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 public class ConexionBD {
     private static String url = "jdbc:mysql://localhost:3306/dbackend";
-    private static String user = "Admin";
-    private static String password = "Admin";
+    private static String user = "admin";
+    private static String password = "admin";
     private static BasicDataSource pool;
 
     public static BasicDataSource getInstance() throws SQLException {

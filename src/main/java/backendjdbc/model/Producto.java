@@ -1,21 +1,32 @@
 package backendjdbc.model;
 
 public class Producto {
-    private Long id_producto;
+    private int id_producto;
     private String nombre;
     private String categoria;
     private String color;
     private String aroma;
     private String presentacion;
-    private float precio;
-    private float costo;
+    private double precio;
+    private double costo;
+
 
     public Producto() {
     }
 
-    public Producto(Long id_producto,
-                    String nombre, String categoria, String color, String aroma, String presentacion,
-                    float precio, float costo) {
+    public Producto(String nombre, String categoria, String color, String aroma, String presentacion,
+                    double precio, double costo) {
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.color = color;
+        this.aroma = aroma;
+        this.presentacion = presentacion;
+        this.precio = precio;
+        this.costo = costo;
+    }
+
+    public Producto(int id_producto, String nombre, String categoria, String color, String aroma, String presentacion,
+                    double precio, double costo) {
         this.id_producto = id_producto;
         this.nombre = nombre;
         this.categoria = categoria;
@@ -26,11 +37,11 @@ public class Producto {
         this.costo = costo;
     }
 
-    public Long getId_producto() {
+    public int getId_producto() {
         return id_producto;
     }
 
-    public void setId_producto(Long id_producto) {
+    public void setId_producto(int id_producto) {
         this.id_producto = id_producto;
     }
 
@@ -74,19 +85,19 @@ public class Producto {
         this.presentacion = presentacion;
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
-    public float getCosto() {
+    public double getCosto() {
         return costo;
     }
 
-    public void setCosto(float costo) {
+    public void setCosto(double costo) {
         this.costo = costo;
     }
     @Override

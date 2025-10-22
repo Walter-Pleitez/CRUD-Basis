@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ICrud <T>{
     List<T> listar();
-    T porId(long id);
+    T porId(int id);
     void guardar(T t);
-    void eliminar(long id);
+    void eliminar(int id);
 }
