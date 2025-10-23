@@ -24,11 +24,19 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>2.0.17</version>
+        </dependency>-->
+        <!--Debido al codigo comentado arriba recibia un mensaje durante la ejecusion por eso
+        inserte la dependencia de abajo-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.14</version> <!-- versión estable para SLF4J 2.x -->
         </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-dependency-plugin -->
         <dependency>

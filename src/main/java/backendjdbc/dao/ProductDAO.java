@@ -3,27 +3,30 @@ package backendjdbc.dao;
 import backendjdbc.model.Producto;
 import backendjdbc.util.ConexionBD;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductoDAO implements ICrud<Producto> {
+public class ProductDAO extends CrudGenerico<Producto>{
 
-    //Conexion a base de datos usando poolo de conexiones
-    private Connection getConnection() throws SQLException {
-        return ConexionBD.getConnection();
+    public ProductDAO() {
+    }
+    public ProductDAO(ConexionBD pool) {
+        super(pool);
     }
 
     @Override
     public List<Producto> listar() {
-        //Esta es una lista que recibira los datos desde MySQL
         List<Producto> productos = new ArrayList<>();
 
         try(
                 //stmt: Este abre la conexion a la BD
-            Statement stmt = getConnection().createStatement();
-            // rs: este toma la conexion abierta por stmt, por lo que stmt manda query a la bd
-            ResultSet rs = stmt.executeQuery("SELECT * FROM productos")
+                Statement stmt = getConnection().createStatement();
+                // rs: este toma la conexion abierta por stmt, por lo que stmt manda query a la bd
+                ResultSet rs = stmt.executeQuery("SELECT * FROM productos")
         ){
             while(rs.next()){
                 //caracteristica de Intelli J que permite crear un metodo para reusar el mismo codigo.
@@ -48,7 +51,7 @@ public class ProductoDAO implements ICrud<Producto> {
         try(
                 PreparedStatement pstmt = getConnection().
                         prepareStatement("SELECT * FROM productos WHERE id = ?");
-                ){
+        ){
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if(rs.next()){
@@ -57,8 +60,8 @@ public class ProductoDAO implements ICrud<Producto> {
                 producto = crearProducto(rs);
             }
         }
-        catch(SQLException throwables){
-            throwables.printStackTrace();
+        catch(SQLException e){
+            e.printStackTrace();
         }
 
         return producto;
@@ -93,8 +96,6 @@ public class ProductoDAO implements ICrud<Producto> {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -102,7 +103,7 @@ public class ProductoDAO implements ICrud<Producto> {
         try(
                 PreparedStatement pstmt = getConnection().prepareStatement("DELETE FROM producto" +
                         "WHERE id=?")
-                ){
+        ){
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
         }
@@ -127,5 +128,4 @@ public class ProductoDAO implements ICrud<Producto> {
         p.setCosto(rs.getFloat("costo"));
         return p;
     }
-
 }
