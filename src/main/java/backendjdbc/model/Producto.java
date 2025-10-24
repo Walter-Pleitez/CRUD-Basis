@@ -1,5 +1,7 @@
 package backendjdbc.model;
 
+import java.util.Objects;
+
 public class Producto {
     private int id_producto;
     private String nombre;
@@ -112,4 +114,15 @@ public class Producto {
                 " | costo = " + costo;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Producto producto = (Producto) o;
+        return id_producto == producto.id_producto && Double.compare(precio, producto.precio) == 0 && Double.compare(costo, producto.costo) == 0 && Objects.equals(nombre, producto.nombre) && Objects.equals(categoria, producto.categoria) && Objects.equals(color, producto.color) && Objects.equals(aroma, producto.aroma) && Objects.equals(presentacion, producto.presentacion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_producto, nombre, categoria, color, aroma, presentacion, precio, costo);
+    }
 }
